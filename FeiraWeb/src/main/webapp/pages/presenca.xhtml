@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--  h componentes nativos do HTML -->
+<!--  f componentes nativos do JSF -->
+<!--  p componentes nativos do PrimeFaces -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<h:outputStylesheet library="css" name="estilo.css" />
+	<title>Presenças</title>
+</h:head>
+<h:body>
+	
+	<div align="center">
+	
+	
+	<p:layout style="min-width:1020px;max-width:1020px;min-height:800px">
+	
+	<p:layoutUnit position="north">
+		<ui:include src="/templates/topo.xhtml" />
+	</p:layoutUnit>
+	 	
+	<p:layoutUnit position="west" size="200">
+		<ui:include src="/templates/menu.xhtml" />
+	</p:layoutUnit>
+	
+	<p:growl id="mensagem" />
+
+	<h:form id="formListagem">
+		<p:layoutUnit position="center">
+			<p:panel header="Presenças - Controle">
+
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado." 
+					paginator="true" paginatorPosition="bottom" value="#{presencaBean.presencas}" var="presenca" rows="10">
+			
+				<f:facet name="footer">
+					<p:commandButton value="Novo" actionListener="#{presencaBean.novo}"
+						oncomplete="PF('dialogo').show();"
+						update=":mensagem :formCadastro:tabelaPresenca:painel" >
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+				</f:facet>
+
+				<p:column headerText="Data" sortBy="#{presencao.data}">
+					<h:outputText value="#{presencao.data}" />
+				</p:column>
+
+				<p:column headerText="Opções" >
+					<p:commandButton icon="ui-icon-trash" actionListener="#{presencaBean.excluir}"
+					update=":mensagem :formListagem:tabela">
+					<p:confirm header="Confirmação"	message = "Deseja Excluir a Lista de Presença?" icon="ui-icon-alert" />
+						<f:attribute name="presencaSelecionado" value="#{presenca}"/>
+					</p:commandButton>
+					
+					<p:commandButton icon="ui-icon-pencil" actionListener= "#{presencaBean.editar}" update=":formCadastro:tabelaPresenca:painel" 
+					oncomplete="PF('dialogo').show();">
+						<f:attribute name="presencaSelecionado" value="#{presenca}"/>
+						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</p:column>	
+			
+			</p:dataTable>
+			<p:confirmDialog global="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</p:panel>
+		</p:layoutUnit>
+	</h:form>
+	</p:layout>  
+	</div>
+	
+	<p:dialog header="Lista de Presença" widgetVar="dialogo" maximizable="30px"
+	 closable="false" draggable="false" modal="true" resizable="false" height="300px" width="600px">
+		<h:form id="formCadastro">
+		
+		<p:column headerText="Data" sortBy="#{presencao.data}">
+					<h:outputText value="Data: " />
+					<h:inputText id="valor" value="#{feiranteProdutoBean.feiranteProduto.valor}"/>
+				</p:column>
+		<p:dataTable id="tabelaPresenca" emptyMessage="Nenhum registro encontrado." 
+					paginator="true" paginatorPosition="bottom" value="#{presencaBean.presencas}" var="presenca" rows="10">
+		
+			<h:panelGrid id="painel" columns="2">
+				<p:outputLabel for="nome" value="Nome:" />
+				<p:inputText id="nome" maxlength="50" size="30"
+					value="#{cidadeBean.cidade.nomeCidade}"
+					required="true" requiredMessage="Campo Obrigatório não preenchido" />
+
+				<p:outputLabel for="estado" value="Estado:" />
+				<p:selectOneMenu id="estado" filter="true" required="true" value="#{cidadeBean.cidade.estado}"
+					converter="omnifaces.SelectItemsConverter">
+					<f:selectItem noSelectionOption="true" itemLabel="Selecione um estado" />
+					<f:selectItems value="#{cidadeBean.estados}" var="estado"
+						itemValue="#{estado}" itemLabel="#{estado.nomeEstado} - #{estado.sigla}"/>
+				</p:selectOneMenu>
+			</h:panelGrid>
+
+			<h:panelGrid columns="2">
+				<p:commandButton value="Salvar" actionListener="#{cidadeBean.salvar}"
+					update=":mensagem :formCadastro:painel :formListagem:tabela" />
+				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
+			</h:panelGrid>
+			
+			<f:facet name="footer">
+				<p:commandButton value="Fechar" 
+					oncomplete="PF('dialogo').hide();" >
+				</p:commandButton>
+			</f:facet>	
+		</p:dataTable>
+		
+		
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

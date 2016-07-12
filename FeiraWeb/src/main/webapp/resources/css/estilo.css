@@ -1,0 +1,46 @@
+@CHARSET "UTF-8";
+
+body {  
+    font-size: 12px;  
+}
+
+.topo {  
+    font-size: 28px;
+    font-family: Georgia;
+    font-style: italic;
+    color: gray;
+    
+}
+
+.titulo-produto {  
+    font-size: 25px;
+    font-family: Georgia;
+    font-weight: bold;
+    color: #4876FF;
+    
+}
+
+.valor-produto {  
+    font-size: 30px;
+    font-family: Georgia;
+    font-style: bold;
+    color: #4876FF;
+    
+}
+
+.unidade-produto {  
+    font-size: 15px;
+    font-family: Georgia;
+    font-style: bold;
+    color: #4876FF;
+    
+}
+
+.feirante-produto {  
+    font-size: 20px;
+    font-family: Georgia;
+    font-style: bold;
+    color: gray;
+    text-align: left;
+    
+}
