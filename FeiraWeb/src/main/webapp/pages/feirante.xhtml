@@ -80,8 +80,7 @@
 									oncomplete = "PF('dialogo').show();">
 									
 									<f:attribute name = "feiranteSelecionado" value="#{feirante}"/>
-									<f:actionListener
-										type = "org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+									<f:actionListener type = "org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 										
 								</p:commandButton>
 					
@@ -413,7 +412,7 @@
 	 		
 	 		<p:outputLabel for = "produto" value = "Produto: "/>
             	
-            	<p:selectOneMenu id="produto" filter="true"
+            	<p:selectOneMenu style = "width: 180px; margin-top: 5px" id="produto" filter="true"
 					converter="omnifaces.SelectItemsConverter"
 					value="#{feiranteProdutoBean.feiranteProduto.produto}">
 					<f:selectItem noSelectionOption="true"
@@ -422,8 +421,18 @@
 						itemValue="#{produto}" itemLabel="#{produto.nomeProduto}" />
 				</p:selectOneMenu>
 				
+				
 				<p:outputLabel value="Unidade Venda: "/>
-				<h:inputText id="unidade" value="#{feiranteProdutoBean.feiranteProduto.unidade}"/>
+				<p:column>
+					<p:selectOneMenu style = "width: 180px; margin-top: 5px" id = "tipo" 
+					value = "#{feiranteProdutoBean.feiranteProduto.unidade}">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione" />
+            		<f:selectItem itemLabel = "Unidade" itemValue = "Unidade"	 />
+            		<f:selectItem itemLabel = "Quilograma" itemValue = "Quilograma"	 />
+            		<f:selectItem itemLabel = "Litro" itemValue = "Quilograma"	 />            		
+        		</p:selectOneMenu>
+				</p:column>
 				
 				<p:outputLabel value="Valor: "/>
 				<h:inputText id="valor" value="#{feiranteProdutoBean.feiranteProduto.valor}"/>

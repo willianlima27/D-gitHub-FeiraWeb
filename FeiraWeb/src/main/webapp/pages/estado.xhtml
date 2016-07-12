@@ -13,28 +13,40 @@
 <h:body>
 	<div align="center">
 		
-		<p:layout style="min-width:1020px;max-width:1020px;min-height:800px"> 
+		<p:layout style = "min-width: 1020px; max-width: 1020px; min-height:700px; max-height:700px">
 		
-		<p:layoutUnit position="north">
-			<ui:include src="/templates/topo.xhtml" />
+		<!-- Posicionamento da barra de cabeçalho -->
+		<p:layoutUnit position = "north">
+			<ui:include src = "/templates/topo.xhtml" />
+		</p:layoutUnit>
+	 	
+	 	<!-- Posicionamento do menu -->
+		<p:layoutUnit position = "west" size = "200">
+			<ui:include src = "/templates/menu.xhtml" />
 		</p:layoutUnit>
 			
-		<p:layoutUnit position="west" size="200">
-			<ui:include src="/templates/menu.xhtml" />
-		</p:layoutUnit>
-	
+		<!-- Posicionamento da barra de rodapé -->
+		<p:layoutUnit position = "south" resizable = "false">
+			<ui:include src = "/templates/rodape.xhtml" />
+		</p:layoutUnit> 
 	
 		<p:growl id="mensagem"/>
-	
-		<h:form id="formListagem">
+		
 		<p:layoutUnit position="center">
-	
-	
+		<h:form id="formListagem">
+
 		<!--  criação do painel e nome do cabeçalho -->
 		<p:panel header="Estados - Listagem" >
 			
 			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
 				paginator="true" paginatorPosition="bottom" value="#{estadoBean.estados}" var="estado" rows="10">
+				
+				<f:facet name="footer">
+					<p:commandButton value="Novo" actionListener="#{estadoBean.novo}"
+						oncomplete="PF('dialogo').show();" update=":formCadastro:painel">
+						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</f:facet>
 			
 				<p:column headerText="Nome" sortBy="#{estado.nomeEstado}">
 					<h:outputText value="#{estado.nomeEstado}" />				
@@ -53,21 +65,12 @@
 					</p:commandButton>
 					
 					<p:commandButton icon="ui-icon-pencil" actionListener= "#{estadoBean.editar}"
-					update=":mensagem :formCadastro:painel" 
-					oncomplete="PF('dialogo').show();">
+					update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
 						<f:attribute name="estadoSelecionado" value="#{estado}"/>
-						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 					</p:commandButton>
 				</p:column>
 				
-				<f:facet name="footer">
-					<p:commandButton value="Novo" actionListener="#{estadoBean.novo}"
-						oncomplete="PF('dialogo').show();"
-						update=":mensagem :formCadastro:painel">
-						<f:actionListener
-							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-					</p:commandButton>
-				</f:facet>
+				
 			
 			</p:dataTable>
 			<p:confirmDialog global="true">
@@ -77,8 +80,9 @@
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
 		</p:panel>
-		</p:layoutUnit>
+		
 	</h:form>
+	</p:layoutUnit>
 	</p:layout>  
 	</div>
 	
@@ -86,20 +90,19 @@
 		draggable="false" resizable="false" modal="true" closable="false">
 		<h:form id="formCadastro">
 			<h:panelGrid id="painel" columns="2">
-				<p:outputLabel for="nome" value="Nome:" />
-				<p:inputText id="nome" maxlength="50" size="30"
-					value="#{estadoBean.estado.nomeEstado}"
-					required="true" requiredMessage="Campo Obrigatório não preenchido" />
+				<p:outputLabel for="nomeEstado" value="Nome:" />
+				<p:inputText id="nomeEstado" maxlength="50" size="30"
+					required="true" requiredMessage="Campo Obrigatório não preenchido"
+					value="#{estadoBean.estado.nomeEstado}" />
 
 				<p:outputLabel for="sigla" value="Sigla:" />
 				<p:inputText id="sigla" maxlength="2" size="10"
-					value="#{estadoBean.estado.sigla}" 
-					required="true" requiredMessage="Campo Obrigatório não preenchido"/>
+					required="true" requiredMessage="Campo Obrigatório não preenchido"
+					value="#{estadoBean.estado.sigla}" />
 			</h:panelGrid>
 
 			<h:panelGrid columns="2">
-				<p:commandButton value="Salvar"
-					actionListener="#{estadoBean.salvar}"
+				<p:commandButton value="Salvar"	actionListener="#{estadoBean.salvar}"
 					update=":mensagem :formCadastro:painel :formListagem:tabela" />
 				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
 			</h:panelGrid>

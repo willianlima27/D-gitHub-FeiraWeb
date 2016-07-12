@@ -18,14 +18,21 @@
 	<div align="center">
 	
 	
-	<p:layout style="min-width:1020px;max-width:1020px;min-height:800px">
+	<p:layout style = "min-width: 1020px; max-width: 1020px; min-height:700px; max-height:700px">
 	
-	<p:layoutUnit position="north">
-		<ui:include src="/templates/topo.xhtml" />
+	<!-- Posicionamento da barra de cabeçalho -->
+	<p:layoutUnit position = "north">
+		<ui:include src = "/templates/topo.xhtml" />
 	</p:layoutUnit>
 	 	
-	<p:layoutUnit position="west" size="200">
-		<ui:include src="/templates/menu.xhtml" />
+	 <!-- Posicionamento do menu -->
+	<p:layoutUnit position = "west" size = "200">
+		<ui:include src = "/templates/menu.xhtml" />
+	</p:layoutUnit>
+			
+	<!-- Posicionamento da barra de rodapé -->
+	<p:layoutUnit position = "south" resizable = "false">
+		<ui:include src = "/templates/rodape.xhtml" />
 	</p:layoutUnit>
 	
 	<p:growl id="mensagem" />
@@ -39,8 +46,7 @@
 			
 				<f:facet name="footer">
 					<p:commandButton value="Novo" actionListener="#{presencaBean.novo}"
-						oncomplete="PF('dialogo').show();"
-						update=":mensagem :formCadastro:tabelaPresenca:painel" >
+						oncomplete="PF('dialogo').show();" update=":mensagem :formCadastro:tabelaPresenca:painel" >
 						<f:actionListener
 							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>

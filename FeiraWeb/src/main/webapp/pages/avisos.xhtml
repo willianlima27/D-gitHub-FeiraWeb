@@ -11,7 +11,7 @@
 <h:head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <h:outputStylesheet library="css" name="estilo.css" />
-	<title>Cidades</title>
+	<title>Avisos</title>
 </h:head>
 <h:body>
 	
@@ -33,44 +33,39 @@
 	<!-- Posicionamento da barra de rodapé -->
 	<p:layoutUnit position = "south" resizable = "false">
 		<ui:include src = "/templates/rodape.xhtml" />
-	</p:layoutUnit> 
+	</p:layoutUnit>
 	
 	<p:growl id="mensagem" />
 
 	<h:form id="formListagem">
 		<p:layoutUnit position="center">
-			<p:panel header="Cidades - Listagem">
+			<p:panel header="Avisos - Controle">
 
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado." 
-					paginator="true" paginatorPosition="bottom" value="#{cidadeBean.cidades}" var="cidade" rows="10">
+					paginator="true" paginatorPosition="bottom" value="#{presencaBean.presencas}" var="presenca" rows="10">
 			
 				<f:facet name="footer">
-					<p:commandButton value="Novo" actionListener="#{cidadeBean.novo}"
-						oncomplete="PF('dialogo').show();" update=":mensagem :formCadastro:painel" >
-						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					<p:commandButton value="Novo" actionListener="#{presencaBean.novo}"
+						oncomplete="PF('dialogo').show();" update=":mensagem :formCadastro:tabelaPresenca:painel" >
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
 				</f:facet>
 
-				<p:column headerText="Nome" sortBy="#{cidade.nomeCidade}">
-					<h:outputText value="#{cidade.nomeCidade}" />
-				</p:column>
-
-				<p:column headerText="Estado" sortBy="#{cidade.estado.nomeEstado}">
-					<h:outputText value="#{cidade.estado.nomeEstado}" />
-					<h:outputText value=" - " />
-					<h:outputText value="#{cidade.estado.sigla}" />
+				<p:column headerText="Data" sortBy="#{presencao.data}">
+					<h:outputText value="#{presencao.data}" />
 				</p:column>
 
 				<p:column headerText="Opções" >
-					<p:commandButton icon="ui-icon-trash" actionListener="#{cidadeBean.excluir}"
+					<p:commandButton icon="ui-icon-trash" actionListener="#{presencaBean.excluir}"
 					update=":mensagem :formListagem:tabela">
-					<p:confirm header="Confirmação"	message = "Deseja Excluir a Cidade?" icon="ui-icon-alert" />
-						<f:attribute name="cidadeSelecionado" value="#{cidade}"/>
+					<p:confirm header="Confirmação"	message = "Deseja Excluir a Lista de Presença?" icon="ui-icon-alert" />
+						<f:attribute name="presencaSelecionado" value="#{presenca}"/>
 					</p:commandButton>
 					
-					<p:commandButton icon="ui-icon-pencil" actionListener= "#{cidadeBean.editar}" update=":formCadastro:painel" 
+					<p:commandButton icon="ui-icon-pencil" actionListener= "#{presencaBean.editar}" update=":formCadastro:tabelaPresenca:painel" 
 					oncomplete="PF('dialogo').show();">
-						<f:attribute name="cidadeSelecionado" value="#{cidade}"/>
+						<f:attribute name="presencaSelecionado" value="#{presenca}"/>
 						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 					</p:commandButton>
 				</p:column>	
@@ -88,10 +83,17 @@
 	</p:layout>  
 	</div>
 	
-	<p:dialog header="Cidades - Cadastro" widgetVar="dialogo" 
-		draggable="false" resizable="false" modal="true" closable="false">
-		
+	<p:dialog header="Lista de Presença" widgetVar="dialogo" maximizable="30px"
+	 closable="false" draggable="false" modal="true" resizable="false" height="300px" width="600px">
 		<h:form id="formCadastro">
+		
+		<p:column headerText="Data" sortBy="#{presencao.data}">
+					<h:outputText value="Data: " />
+					<h:inputText id="valor" value="#{feiranteProdutoBean.feiranteProduto.valor}"/>
+				</p:column>
+		<p:dataTable id="tabelaPresenca" emptyMessage="Nenhum registro encontrado." 
+					paginator="true" paginatorPosition="bottom" value="#{presencaBean.presencas}" var="presenca" rows="10">
+		
 			<h:panelGrid id="painel" columns="2">
 				<p:outputLabel for="nome" value="Nome:" />
 				<p:inputText id="nome" maxlength="50" size="30"
@@ -112,6 +114,15 @@
 					update=":mensagem :formCadastro:painel :formListagem:tabela" />
 				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
 			</h:panelGrid>
+			
+			<f:facet name="footer">
+				<p:commandButton value="Fechar" 
+					oncomplete="PF('dialogo').hide();" >
+				</p:commandButton>
+			</f:facet>	
+		</p:dataTable>
+		
+		
 		</h:form>
 	</p:dialog>
 </h:body>

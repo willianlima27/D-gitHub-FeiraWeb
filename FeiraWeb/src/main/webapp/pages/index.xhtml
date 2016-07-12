@@ -18,16 +18,26 @@
 	
 	<p:layoutUnit position="center" style="min-width:1020px;max-width:1020px;min-height:700px" >
 	
-	<p:layoutUnit position="north">
-		<ui:include src="/templates/topo.xhtml" />
+	<!-- Posicionamento da barra de cabeçalho -->
+	<p:layoutUnit position = "north">
+		<ui:include src = "/templates/topo.xhtml" />
 	</p:layoutUnit>
 	
 	<p:growl id="mensagem" />
 	
 	<h:form id="formListagem">
+		
+		<h:panelGrid styleClass="alinhar-direita" columns="2">
+			<p:inputText  id="nome" maxlength="50" size="30"
+				value=""
+				required="true" requiredMessage="Campo Obrigatório não preenchido" />
+			<p:commandButton value="Pesquisar" type="button" icon="ui-icon-search" />
+		</h:panelGrid>
+		
 		<p:dataGrid var="feiranteProduto" value="#{feiranteProdutoBean.feirantesProdutos}" columns="3" layout="grid"
-        rows="15" paginator="true" id="produtos">
- 
+        rows="9" paginator="true" id="produtos">
+        
+ 		
         <f:facet name="header">
             Saiba quais Produtos são vendidos na Feira do Produtor
         </f:facet>
@@ -42,10 +52,10 @@
  
             </h:panelGrid>
         </p:panel>
- 
-    </p:dataGrid>
+    </p:dataGrid> 
 	</h:form>
-	</p:layoutUnit>  
+	</p:layoutUnit>
+	
 	</div>
 </body>
 </html>

@@ -2,21 +2,29 @@
 
 body {  
     font-size: 12px;  
+    background-color: #A9A9A9;
 }
 
 .topo {  
-    font-size: 28px;
+    background-image: url("../Imagens/topo.jpg");
+    padding: 20px;
+   
+}
+
+.topo-escrita {  
+    font-size: 38px;
     font-family: Georgia;
     font-style: italic;
-    color: gray;
-    
+    font-weight: bold;
+    color: white;
+   
 }
 
 .titulo-produto {  
     font-size: 25px;
     font-family: Georgia;
     font-weight: bold;
-    color: #4876FF;
+    color: #3F567B;
     
 }
 
@@ -24,7 +32,7 @@ body {
     font-size: 30px;
     font-family: Georgia;
     font-style: bold;
-    color: #4876FF;
+    color: #3F567B;
     
 }
 
@@ -32,7 +40,7 @@ body {
     font-size: 15px;
     font-family: Georgia;
     font-style: bold;
-    color: #4876FF;
+    color: #3F567B;
     
 }
 
@@ -43,4 +51,13 @@ body {
     color: gray;
     text-align: left;
     
+}
+
+form {
+	text-align: left
+}
+
+.alinhar-direita{
+	padding: 10px;
+	
 }
