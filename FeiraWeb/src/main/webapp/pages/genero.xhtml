@@ -45,6 +45,7 @@
 						actionListener="#{generoBean.novo}" update=":formCadastro:painel" >
 						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 					</p:commandButton>
+					<p:commandButton icon="ui-icon-print" value="Imprimir" actionListener="#{generoBean.imprimir}"/>
 				</f:facet>
 			
 				<p:column headerText="Gênero" sortBy="#{genero.nomeGenero}">
@@ -52,7 +53,7 @@
 				</p:column>
 
 				
-				<p:column width="100" headerText="Opções">
+				<p:column style="text-align:center" width="100" headerText="Opções">
 					<p:commandButton icon="ui-icon-trash" actionListener="#{generoBean.excluir}"
 					update=":mensagem :formListagem:tabela">
 					<p:confirm header="Confirmação"	message = "Deseja Excluir o gênero?" icon="ui-icon-alert" />
@@ -81,8 +82,8 @@
 		draggable="false" resizable="false" modal="true" closable="false">
 		<h:form id="formCadastro">
 			<h:panelGrid id="painel" columns="2">
-				<p:outputLabel for="genero" value="Gênero:" />
-				<p:inputText id="genero" maxlength="50" size="30"
+				<p:outputLabel for="genero" style = "margin-bottom: 5px" value="Gênero:" />
+				<p:inputText id="genero" style = "margin-bottom: 5px" maxlength="50" size="30"
 					value="#{generoBean.genero.nomeGenero}"
 					required="true" requiredMessage="Campo Obrigatório não preenchido" />
 

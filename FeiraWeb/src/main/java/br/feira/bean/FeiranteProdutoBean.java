@@ -1,16 +1,18 @@
 package br.feira.bean;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.sql.Connection;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
+import org.primefaces.component.datatable.DataTable;
 
 import br.feira.dao.FeiranteDAO;
 import br.feira.dao.FeiranteProdutoDAO;
@@ -18,6 +20,11 @@ import br.feira.dao.ProdutoDAO;
 import br.feira.domain.Feirante;
 import br.feira.domain.FeiranteProduto;
 import br.feira.domain.Produto;
+import br.feira.util.HibernateUtil;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -82,9 +89,6 @@ public class FeiranteProdutoBean implements Serializable{
 		try {
 			FeiranteProdutoDAO feiranteProdutoDAO = new FeiranteProdutoDAO();
 			feirantesProdutos = feiranteProdutoDAO.listar();
-			//feirantesProdutos = feiranteProdutoDAO.buscaPorFeirante(feirante.getCodigo());
-			//System.out.println("codigo Feirante Retorno: "+feirantesProdutos.get(0).getCodigo());
-			System.out.println("codigo listar:"+feirantesProdutos.get(0).getCodigo());
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao tentar listar os Produtos do Feirante");
 			erro.printStackTrace();
@@ -95,9 +99,7 @@ public class FeiranteProdutoBean implements Serializable{
 		try{
 			produtoPorFeirante = feirantesProdutos;
 			FeiranteProdutoDAO feiranteProdutoDAO = new FeiranteProdutoDAO();
-			System.out.print(feirante.getCodigo());
 			produtoPorFeirante = feiranteProdutoDAO.buscaPorFeirante(feirante.getCodigo());
-			System.out.println("codigo popular: "+produtoPorFeirante.get(0).getCodigo());
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao tentar listar os Produtos do Feirante");
 			erro.printStackTrace();
@@ -113,30 +115,6 @@ public class FeiranteProdutoBean implements Serializable{
 		return feirante;
 		
 	}
-	
-	/*@PostConstruct
-	public void listarPorFeirante(){
-		try{
-			FeiranteProdutoDAO feiranteProdutoDAO = new FeiranteProdutoDAO();
-			feirantesProdutos = feiranteProdutoDAO.buscaPorFeirante(feirante.getCodigo());
-			if(feirantesProdutos == null){
-				System.out.println("Não veio Lista ");	
-			}else{
-				System.out.println("Veio Lista");
-				for(int i = 0; i < feirantesProdutos.size(); i++){
-					System.out.println("Valor:"+feirantesProdutos.get(i).getValor());
-				}
-			}
-				
-			//System.out.println("codigo no Bean: "+feirante.getCodigo());
-			
-			
-		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Ocorreu um erro ao tentar listar os Produtos do Feirante");
-			erro.printStackTrace();
-		}
-		
-	}*/
 	
 	public void novo() {
 		try {
@@ -158,12 +136,7 @@ public class FeiranteProdutoBean implements Serializable{
 	public void salvar() {
 		try {
 			
-			System.out.println(feirante.getCodigo());
 			feiranteProduto.setFeirante(feirante);
-			
-			System.out.println(feiranteProduto.getUnidade());
-			System.out.println(feiranteProduto.getValor());
-			System.out.println(feiranteProduto.getProduto().getCodigo());
 			
 			FeiranteProdutoDAO feiranteProdutoDAO = new FeiranteProdutoDAO();
 			feiranteProdutoDAO.salvar(feiranteProduto);
@@ -216,6 +189,24 @@ public class FeiranteProdutoBean implements Serializable{
 			Messages.addGlobalInfo("Produto removido com sucesso");
 		}catch (RuntimeException erro){
 			Messages.addFlashGlobalError("Ocorreu um erro ao tentar remover o Produto");
+			erro.printStackTrace();
+		}
+	}
+	
+	public void imprimir(){
+		try{
+			DataTable tabela = (DataTable) Faces.getViewRoot().findComponent("formListagemProduto:tabelaProduto");
+			Map<String, Object> parametros = tabela.getFilters();		
+		
+			String caminho = Faces.getRealPath("/reports/feirantesprodutos.jasper");
+					
+			Connection conexao = HibernateUtil.getConexao();
+					
+			JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros, conexao);
+			
+			JasperPrintManager.printReport(relatorio, true);
+		}catch (JRException erro){
+			Messages.addGlobalError("Ocorreu um erro ao tentar gerar o relatório");
 			erro.printStackTrace();
 		}
 	}

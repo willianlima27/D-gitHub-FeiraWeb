@@ -1,8 +1,6 @@
 package br.feira.domain;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -12,9 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 @SuppressWarnings("serial")
 @Entity
 public class Feirante extends GenericDomain{
@@ -23,7 +18,7 @@ public class Feirante extends GenericDomain{
 	private int registro;
 	
 	@Column(nullable = false)
-	private boolean situacao;
+	private boolean situacao = true;
 
 	@Column(length = 50, nullable = false)
 	private String razaoSocial;

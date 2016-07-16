@@ -72,7 +72,7 @@
 							</p:column>
 				
 							<!-- Coluna de opções -->
-							<p:column width = "160" headerText = "Opções" >
+							<p:column style="text-align:center" width = "160" headerText = "Opções" >
 					
 								<!-- Botão de edição -->
 								<p:commandButton icon = "ui-icon-pencil" actionListener = "#{feiranteBean.editar}" 
@@ -111,6 +111,7 @@
 									<f:actionListener
 										type = "org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 								</p:commandButton>
+								<p:commandButton icon="ui-icon-print" value="Imprimir" actionListener="#{feiranteBean.imprimir}"/>
 							</f:facet>
 				
 						</p:dataTable>
@@ -130,214 +131,256 @@
 		</p:layout>  
 	</div>
 	
-	<!-- Diálogo -->
+	<!-- Diálogo de Cadastramento -->
 	<p:dialog header = "Feirante - Cadastro" widgetVar = "dialogo" maximizable = "30px"
-	 closable = "false" draggable = "true" modal = "true" resizable = "false" height = "595px" width = "600px">
+	 closable = "false" draggable = "false" modal = "true" resizable = "false" height = "580px" width = "670px">
 		
-		<!-- Definição do formulário  de cadastro -->
+		<!-- Formulário de cadastro -->
 		<h:form id = "formCadastro">
 		
-		<!-- Definição do painel de alinhamento do campos de cadastro -->
-		<h:panelGrid title = "Feirantes" id = "painel" style = "margin-bottom: 8px" cellpadding = "2">
+			<!-- Painel para alinhamento dos componentes -->
+			<h:panelGrid title = "Feirantes" id = "painel"  style = "margin-bottom: 8px" cellpadding = "0">
 		
-			<p:row>
-			
-				<p:column>
-					<!-- Definição do RadioButtom da "Situação" do feirante -->
-					<h:outputText style = "margin-left: 20px; margin-top: 5px" value = "Situação: " />
-					
-				</p:column>
-				
-				<p:column>
-					<p:selectOneRadio style = "margin-left: 20px; margin-top: 5px" id = "situacao" 
-						value = "#{feiranteBean.feirante.situacao}">
-            			<f:selectItem itemLabel = "Ativo" itemValue = "true" />
-            			<f:selectItem itemLabel = "Inativo" itemValue = "false" />
-        			</p:selectOneRadio>
-				</p:column>
-				
-				<p:column>
-					<p:outputLabel style = "margin-left: 20px; margin-top: 5px" value = "N° Registro DAP: "/>
-					<p:inputText maxlength = "7" size = "7" value = "#{feiranteBean.feirante.registro}"/>
-				</p:column>
-			
-			</p:row>
-				
-			<p:row>
-			
-				<p:column>
-					<p:outputLabel style = "margin-left: 20px; margin-top: 5px" value = "Nome/Fantasia:"/>
-				</p:column>
-				
-				<p:column>
-					<p:inputText style = "margin-left: 5px; margin-top: 5px" maxlength = "40" size = "40" 
-					value = "#{feiranteBean.feirante.nomeFantasia}"/>
-				</p:column>
-			
-			</p:row>
-			
-			<p:row>
-				<p:column>
-					<p:outputLabel style = "margin-left: 20px; margin-top: 5px" value = "Razão Social:"/>
-				</p:column>
-				
-				<p:column>
-					<p:inputText style = "margin-left: 22px; margin-top: 5px" maxlength = "40" size = "40" 
-					value = "#{feiranteBean.feirante.razaoSocial}"/>
-				</p:column>
-			</p:row>
-			
-			<p:row>
-				<p:column>
-					<p:outputLabel style = "margin-left: 20px; margin-top: 5px" for = "tipo" value = "Tipo: "/>
-				</p:column>
-				
-				<p:column>
-					<p:selectOneMenu style = "margin-left: 72px; width: 180px; margin-top: 5px" id = "tipo" 
-					value = "#{feiranteBean.feirante.tipoPessoa}">
-            		<f:selectItem itemLabel = "Pessoa Física" itemValue = "F"	 />
-            		<f:selectItem itemLabel = "Pessoa Jurídica" itemValue = "J"	 />            		
-        		</p:selectOneMenu>
-				</p:column>
-			</p:row>		
-				
-			<p:row>
-				<p:column>
-					<p:outputLabel style = "margin-left: 20px; margin-top: 5px" for = "cpf" value = "CPF:" />
-				</p:column>
-				<p:column>
-					<p:inputMask style = "margin-left: 65px; width:160px; margin-top: 5px" required = "true" id = "cpf" 
-        				value = "#{feiranteBean.feirante.cpf_cnpj}" mask = "999.999.999-99"/>
-				</p:column>
-				<p:column>
-					<p:outputLabel style = "margin-left: 20px" value = "RG: "/>
-				</p:column>
-				<p:column>
-					<p:inputText style = "margin-left: 3px" maxlength = "20" size = "15" 
-						value = "#{feiranteBean.feirante.rg_ie}"/>
-				</p:column>
-			</p:row>
-			
-			<p:separator style = "margin-left: 20px"/>
-
-				<!-- Linha  -->
+				<!-- Linha "Situação" -->
 				<p:row>
 					<p:column>
-					<p:selectOneMenu style = "margin-left: 20px; width: 100px" id = "logradouro" 
-						value = "#{feiranteBean.feirante.logradouro}">
-            		
-            			<f:selectItem itemLabel = "Avenida" itemValue = "Avenida"/> 
-            			<f:selectItem itemLabel = "Estrada" itemValue = "Estrada"/>
-            			<f:selectItem itemLabel = "Rodovia" itemValue = "Rodovia"/>
-            			<f:selectItem itemLabel = "Rua" itemValue = "Rua"/>
-            			<f:selectItem itemLabel = "Travessa" itemValue = "Travessa"/>  
-            		          		
-        			</p:selectOneMenu>
+						<h:outputText style = "margin-left: 20px; margin-top: 3px" value = "Situação: "/>
+					</p:column>
+					<p:column>
+						<p:selectOneRadio style = "margin-left: 20px; margin-top: 0px" id = "situacao" 
+							value = "#{feiranteBean.feirante.situacao}">
+            				<f:selectItem itemLabel = "Ativo" itemValue = "true" selected = "true"/>
+            				<f:selectItem itemLabel = "Inativo" itemValue = "false" />
+        				</p:selectOneRadio>
+					</p:column>
+					<p:column>
+						<p:outputLabel style = "margin-left: 20px; margin-top: 3px" value = "N° Registro DAP:"/>
+					</p:column>
+					<p:column>
+						<p:inputText style = "margin-left: 5px; margin-top: 3px" maxlength = "7" size = "7" 
+							value = "#{feiranteBean.feirante.registro}"/>
+					</p:column>
+				</p:row>
+
+				<!-- Linha "Nome Fantasia" -->
+				<p:row>
+					<p:column>
+						<p:outputLabel style = "margin-left: 20px; margin-top: 3px" value = "Nome/Fantasia:"/>
+					</p:column>
+					<p:column>
+						<p:inputText style = "margin-left: 12px; margin-top: 3px" maxlength = "30" size = "55" 
+							value = "#{feiranteBean.feirante.nomeFantasia}"/>
+					</p:column>
+				</p:row>
+				
+				<!-- Linha Razão Social -->
+				<p:row>
+					<p:column>
+						<p:outputLabel style = "margin-left: 20px; margin-top: 3px" value = "Razão Social:"/>
+					</p:column>
+					<p:column>
+						<p:inputText style = "margin-left: 28px; margin-top: 3px" maxlength = "50" size = "55" 
+							value = "#{feiranteBean.feirante.razaoSocial}"/>
+					</p:column>
+				</p:row>
+				
+				<!-- Linha Tipo -->
+				<p:row>
+					<p:column>
+						<p:outputLabel style = "margin-left: 20px; margin-top: 3px" for = "tipo" value = "Tipo: "/>
+					</p:column>
+					<p:column>
+						<p:selectOneMenu style = "margin-left: 79px; margin-top: 3px; width: 150px" id = "tipo"
+							value = "#{feiranteBean.feirante.tipoPessoa}">
+            				<f:selectItem itemLabel = "Pessoa Física" itemValue = "F"/>
+            				<f:selectItem itemLabel = "Pessoa Jurídica" itemValue = "J"/>
+            				          		
+        				</p:selectOneMenu>
+					</p:column>
+				</p:row>
+					
+				<!-- Linha Documentos -->		
+				<p:row>
+					<p:column>
+						<p:outputLabel style = "margin-left: 20px; margin-top: 3px" for = "cpf" value = "CPF:" />
 					</p:column>
 					
 					<p:column>
-						<p:outputLabel style = "margin-left: 20px" value = "Logradouro: "/>
-						<p:inputText style = "margin-left: 3px" maxlength = "50" size = "30" 
+						
+						<p:inputMask style = "margin-left: 74px; margin-top: 3px; width: 160px" required = "true" id = "cpf" 
+        					value = "#{feiranteBean.feirante.cpf_cnpj}" mask = "999.999.999-99"/>
+					</p:column>
+					<p:column>
+						<p:outputLabel style = "margin-left: 12px; margin-top: 3px" value = "RG: "/>
+					</p:column>
+					<p:column>
+						<p:inputText style = "margin-left: 3px; margin-top: 3px" maxlength = "20" size = "15" 
+							value = "#{feiranteBean.feirante.rg_ie}"/>
+					</p:column>
+				</p:row>
+				
+				<p:separator style = "margin-left: 20px; margin-top: 5px; margin-bottom: 5px" />
+
+				<!-- Linha "Logradouro" -->
+				<p:row>
+						<p:column>
+							<p:outputLabel style = "margin-left: 20px" value = "Logradouro: "/>
+						</p:column>
+					<p:column>
+						<p:selectOneMenu style = "margin-left: 33px; width: 80px; margin-top: 3px" id = "logradouro"  
+							value = "#{feiranteBean.feirante.logradouro}">
+							
+            				<f:selectItem itemLabel = "Avenida" itemValue = "Avenida"/>
+            				<f:selectItem itemLabel = "Estrada" itemValue = "Estrada"/>
+            				<f:selectItem itemLabel = "Rodovia" itemValue = "Rodovia"/>
+            				<f:selectItem itemLabel = "Rua" itemValue = "Rua"/> 
+            				<f:selectItem itemLabel = "Travessa" itemValue = "Travessa"/> 
+            			   		
+        				</p:selectOneMenu>
+					</p:column>
+					<p:column>
+						<p:inputText style = "margin-left: 3px; margin-top: 3px" maxlength = "50" size = "40" 
 							value = "#{feiranteBean.feirante.nomeLogradouro}"/>
 					</p:column>
-				
+					
 				</p:row>
-							
+
+				<!-- Linha "Número" -->
 				<p:row>
 					<p:column>
-						<p:outputLabel  style = "margin-left: 20px; margin-top: 5px" value = "N°: "/>
-						<p:inputText style = "margin-left: 3px; margin-top: 5px" maxlength = "7" size = "7" 
+						<p:outputLabel style = "margin-left: 20px; margin-top: 3px" value = "N°: "/>
+					</p:column>
+					<p:column>
+						<p:inputText style = "margin-left: 90px; margin-top: 3px" maxlength = "7" size = "7" 
 							value = "#{feiranteBean.feirante.numero}"/>
 					</p:column>
-					
 					<p:column>
-						<p:outputLabel style = "margin-left: 20px; margin-top: 5px" value = "Complemento: "/>
-						<p:inputText style = "margin-left: 3px; margin-top: 5px" maxlength = "50" size = "20" 
+						<p:outputLabel style = "margin-left: 12px; margin-top: 3px" value = "Complemento: "/>
+					</p:column>
+					<p:column>
+						<p:inputText style = "margin-left: 3px; margin-top: 3px" maxlength = "30" size = "24" 
 							value = "#{feiranteBean.feirante.complemento}"/>
 					</p:column>
 				</p:row>
 				
+				<!-- Linha "Bairro" -->
 				<p:row>
 					<p:column>
-						<p:outputLabel style = "margin-left: 20px; margin-top: 5px" value = "Bairro: "/>
-						<p:inputText style = "margin-left: 3px; margin-top: 5px" maxlength = "50" size = "20" 
-							value = "#{feiranteBean.feirante.bairro}"/>
+						<p:outputLabel style = "margin-left: 20px; margin-top: 3px" value = "Bairro: "/>
 					</p:column>
-					
 					<p:column>
-						<p:outputLabel style = "margin-left:3px; margin-top: 5px" for = "cep" value = "CEP:"/>
-        				<p:inputMask style = "margin-left:3px; margin-top: 5px" id = "cep" 
-        					value = "#{feiranteBean.feirante.cep}" mask = "99999-999" size = "20"/>
+						<p:inputText style = "margin-left: 66px; margin-top: 3px" maxlength = "50" size = "20" 
+							value ="#{feiranteBean.feirante.bairro}"/>
+					</p:column>
+					<p:column>
+						<p:outputLabel style = "margin-left: 12px; margin-top: 3px" for = "cep" value = "CEP:"/>
+					</p:column>
+					<p:column>
+						<p:inputMask style = "margin-left: 3px; margin-top: 3px; width: 120px" id = "cep" 
+							value = "#{feiranteBean.feirante.cep}" mask = "99.999-999" size="20"/>
 					</p:column>
 				</p:row>
-				
-				<p:row>
-					<p:column>
-						<p:outputLabel style = "margin-left: 20px; margin-top: 5px" for = "estado" value = "Estado:" />
-						<p:selectOneMenu style = "margin-left: 3px; width: 240px; margin-top: 5px" id = "estado" filter = "true" 
-							converter = "omnifaces.SelectItemsConverter" value = "#{feiranteBean.estado}">
-					
-							<f:selectItem noSelectionOption = "true"
-								itemLabel = "Selecione um estado" />
-							<f:selectItems value = "#{feiranteBean.estados}" var = "estado"
-								itemValue = "#{estado}" itemLabel = "#{estado.nomeEstado}" />
-							<p:ajax listener = "#{feiranteBean.popular}" update = ":formCadastro:cidade" />
-						
-						</p:selectOneMenu>
-						
-					</p:column>
-				</p:row>
-        		
-				<p:row>
-					<p:column>
-						<p:outputLabel style = "margin-left: 20px; margin-top: 5px" for = "cidade" value = "Cidade:" />
-						<p:selectOneMenu style = "margin-left: 3px; width: 240px; margin-top: 5px" 
-						id = "cidade" filter = "true" 
-						required = "true" requiredMessage = "O campo 'Cidade' é obrigatório"
-						converter = "omnifaces.SelectItemsConverter" value = "#{feiranteBean.feirante.cidade}">
-					
-						<f:selectItem noSelectionOption = "true"
-							itemLabel = "Selecione uma cidade" />
-						<f:selectItems value = "#{feiranteBean.cidades}" var = "cidade"
-							itemValue = "#{cidade}" itemLabel = "#{cidade.nomeCidade}"/>
-						
-				</p:selectOneMenu>
-					</p:column>
-				</p:row>
-				
-				<p:row>
-					<p:column>
-						<p:outputLabel style = "margin-left: 20px; margin-top: 5px" value = "Email: "/>
-						<p:inputText style = "margin-left: 3px; margin-top: 5px" maxlength = "50" size = "30" 
-							value = "#{feiranteBean.feirante.email}"/>
-					</p:column>
-				</p:row>
-				
+
+				<!-- Linha "Estado" -->
         		<p:row>
         			<p:column>
-        				<p:outputLabel style = "margin-left: 20px; margin-top: 5px" for = "telefone" value = "Telefone:" />
-        				<p:inputMask style = "margin-left: 3px; margin-top: 5px" id = "telefone" 
-        				value = "#{feiranteBean.feirante.telefoneFixo}" mask = "(99) 9999-9999"/>
+        				<p:outputLabel style = "margin-left: 20px; margin-top: 3px; width:240px" for = "estado" value = "Estado:" />
+        			</p:column>
+        			<p:column>
+        				<p:selectOneMenu style = "margin-left: 68px; margin-top: 3px" id = "estado" 
+        					filter = "true" converter = "omnifaces.SelectItemsConverter" value="#{feiranteBean.estado}">
+        					
+							<f:selectItem noSelectionOption = "true"
+								itemLabel = "Selecione um estado" />
+							<f:selectItems value="#{feiranteBean.estados}" var = "estado"
+								itemValue = "#{estado}" itemLabel = "#{estado.nomeEstado}"/>
+							<p:ajax listener="#{feiranteBean.popular}" update = ":formCadastro:cidade"/>
+						
+						</p:selectOneMenu>
         			</p:column>
         			
+        		</p:row>
+        		
+        		<!-- Linha "Cidade" -->
+        		<p:row>
         			<p:column>
-        				<p:outputLabel style = "margin-left: 3px; margin-top: 5px" for = "celular" value = "Celular:" />
-        				<p:inputMask style = "margin-left: 3px; margin-top: 5px" id = "celular" 
-        					value = "#{feiranteBean.feirante.telefoneCelular}" mask = "(99) 9999-9999"/>
+        				<p:outputLabel style = "margin-left: 20px; margin-top: 3px" for = "cidade" value = "Cidade:" />
+        			</p:column>
+        			<p:column>
+        				<p:selectOneMenu style = "margin-left: 53px; margin-top: 3px; width: 300px" id = "cidade" 
+        					filter = "true" required = "true" requiredMessage = "O campo 'Cidade' é obrigatório"
+							converter = "omnifaces.SelectItemsConverter" value = "#{feiranteBean.feirante.cidade}">
+							
+							<f:selectItem noSelectionOption = "true"
+								itemLabel = "Selecione uma cidade" />
+							<f:selectItems value = "#{feiranteBean.cidades}" var = "cidade"
+								itemValue = "#{cidade}" itemLabel = "#{cidade.nomeCidade}" />
+						</p:selectOneMenu>
         			</p:column>
         		</p:row>
         		
-        		<p:outputLabel style = "margin-left: 20px; margin-top: 10px" value = "Sobre o Feirante:" />
-        		<p:inputTextarea style = "margin-left: 20px" rows = "3" cols = "60"/>
+        		<p:separator style = "margin-left: 20px; margin-top: 5px; margin-bottom: 5px"/>
+        		
+        		<!-- Linha "E-mail" -->
+				<p:row>
+					<p:column>
+						<p:outputLabel style = "margin-left: 20px; margin-top: 0px" value = "Email:"/>
+					</p:column>
+					<p:column>
+						<p:inputText style = "margin-left: 75px; margin-top: 0px" maxlength = "50" size = "50" 
+							value = "#{feiranteBean.feirante.email}"/>
+					</p:column>
+				</p:row>
+
+				<!-- Linha "Telefone" -->
+				<p:row>
+					<p:column>
+						<p:outputLabel style = "margin-left: 20px; margin-top: 3px" for = "telefone" value = "Telefone:" />
+					</p:column>
+					<p:column>
+						<p:inputMask style = "margin-left: 57px; margin-top: 3px; width: 120px" id = "telefone" 
+							value = "#{feiranteBean.feirante.telefoneFixo}" mask = "(99) 9999-9999"/>
+					</p:column>
+					<p:column>
+						<p:outputLabel style = "margin-left: 12px; margin-top: 3px" for = "celular" value = "Celular:" />
+					</p:column>
+					<p:column>
+						<p:inputMask style = "margin-left: 3px; margin-top: 3px; width: 120px" id = "celular" 
+							value = "#{feiranteBean.feirante.telefoneCelular}" mask = "(99) 9999-9999"/>
+					</p:column>
+				</p:row>
+        		
+        		<!-- Label "Sobre o feirante" -->
+        		<p:row>
+        			<p:column>
+       						<p:outputLabel style = "margin-left: 20px; margin-top: 3px" value = "Sobre o Feirante:" />
+       				</p:column>
+        		</p:row>
+        	
+        		<!-- Campo "Sobre o feirante" -->
+       			<p:row>
+       				<p:column>
+       					<p:inputTextarea style = "margin-left: 20px; margin-top: 3px" rows = "2" cols = "70"/>
+       				</p:column>
+       			</p:row>
+        		
+        		<p:separator style = "margin-left: 20px; margin-top: 5px; margin-bottom: 5px"/>
         		
         	</h:panelGrid>
 
-				<h:panelGrid columns = "2">
-					<p:commandButton style = "margin-left: 50" value = "Salvar" actionListener = "#{feiranteBean.salvar}"
-						update = ":mensagem :formCadastro:painel :formListagem:tabelaFeirantes" />
-					<p:commandButton value = "Fechar" oncomplete = "PF('dialogo').hide();" />
-				</h:panelGrid>
-			</h:form>	
+			<h:panelGrid>
+				<p:row>
+					<p:column>
+						<p:commandButton style = "margin-left: 240px; margin-top: 0px" 
+							value = "Salvar" actionListener = "#{feiranteBean.salvar}"
+							update = ":mensagem :formCadastro:painel :formListagem:tabelaFeirantes" />
+					</p:column>
+					<p:column>
+						<p:commandButton style = "margin-top: 0px" value = "Fechar" oncomplete = "PF('dialogo').hide();" />
+					</p:column>
+				</p:row>
+			</h:panelGrid>
+		</h:form>	
 	</p:dialog>
 	
 	<!-- Tabela de vinculação -->
@@ -387,6 +430,7 @@
 						<f:actionListener
 							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 					</p:commandButton>
+					<p:commandButton icon="ui-icon-print" value="Imprimir" actionListener="#{feiranteProdutoBean.imprimir}"/>
 					<p:commandButton value="Fechar" 
 					update=":mensagem :formCadastroProduto:painelProduto :formListagemProduto:tabelaProduto"
 					oncomplete="PF('dialogoProduto').hide();" >
@@ -430,7 +474,8 @@
 						itemLabel="Selecione" />
             		<f:selectItem itemLabel = "Unidade" itemValue = "Unidade"	 />
             		<f:selectItem itemLabel = "Quilograma" itemValue = "Quilograma"	 />
-            		<f:selectItem itemLabel = "Litro" itemValue = "Quilograma"	 />            		
+            		<f:selectItem itemLabel = "Litro" itemValue = "Quilograma"	 />
+            		<f:selectItem itemLabel = "Pacote" itemValue = "Pacote"	 />            		
         		</p:selectOneMenu>
 				</p:column>
 				

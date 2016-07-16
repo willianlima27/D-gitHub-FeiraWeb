@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2016-07-14T04:52:38 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Produto por Feirante" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ed1c9f91-f153-46b3-b081-db4e86d318d5">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="FeiraWeb"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<queryString>
+		<![CDATA[SELECT public.feiranteproduto.unidade,
+	public.feiranteproduto.valor,
+	public.produto.nomeproduto,
+	public.feirante.nomefantasia
+FROM public.feiranteproduto
+	INNER JOIN public.produto ON 
+	 public.feiranteproduto.idproduto = public.produto.codigo 
+	INNER JOIN public.feirante ON 
+	 public.feiranteproduto.idfeirante = public.feirante.codigo 
+ORDER BY public.produto.nomeproduto ASC]]>
+	</queryString>
+	<field name="nomeproduto" class="java.lang.String"/>
+	<field name="unidade" class="java.lang.String"/>
+	<field name="valor" class="java.math.BigDecimal"/>
+	<field name="nomefantasia" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="150" height="60" forecolor="#249135" uuid="0b674f24-798b-4fc8-b2bf-85ada6b5042c"/>
+				<textElement>
+					<font fontName="Arial" size="26" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[FeiraWeb]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="181" y="10" width="228" height="20" uuid="9dd10853-6227-4f37-a56f-79521213b9f4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório - Produtos por Feirante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="36" width="68" height="20" uuid="2d920712-6d85-4458-b055-f9129232ffa5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Emitido em]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="279" y="36" width="90" height="20" uuid="05ba3c05-75cf-457f-99f3-ae5470406f41"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="10" width="94" height="30" uuid="487cfb29-94d3-40ab-a99e-2f32588f2401"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="296" y="0" width="58" height="20" uuid="940dc0bf-d379-4d06-8ceb-645b12c008cd"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="0" width="60" height="20" uuid="bcd217dc-b42d-4adb-9552-3b5e89981138"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="0" width="100" height="20" uuid="0f6b3b46-f630-4de6-afe6-21fd7db46072"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Unidade]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="25" width="545" height="1" uuid="2be27030-9702-404c-ae19-c656f9fff388"/>
+			</line>
+			<staticText>
+				<reportElement x="410" y="0" width="70" height="20" uuid="6640e19a-b40c-4d80-ae97-acbc931bf03d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Feirante]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Immediate">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<line>
+				<reportElement x="1" y="20" width="543" height="1" forecolor="#666464" uuid="e0ad53ee-a511-490f-90b7-3cc4bd927909"/>
+			</line>
+			<textField>
+				<reportElement x="4" y="0" width="160" height="20" uuid="0b4682e8-bb6f-4e96-83be-53789361a8b4"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomeproduto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="0" width="79" height="20" uuid="56945772-c963-424d-8bff-3d898eb35733"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{unidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="1" width="98" height="20" uuid="3243631a-5316-4787-8387-ba4dd45c1c83"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="410" y="0" width="133" height="20" uuid="be18fcb4-e759-42db-ac38-5bb5aa2d5e90"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomefantasia}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="296" y="2" width="14" height="18" uuid="38590c72-c6ee-4f87-902a-8b9df1b9813d"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

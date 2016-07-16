@@ -2,7 +2,7 @@
 
 body {  
     font-size: 12px;  
-    background-color: #A9A9A9;
+    background-color: #778899;
 }
 
 .topo {  
@@ -60,4 +60,13 @@ form {
 .alinhar-direita{
 	padding: 10px;
 	
+}
+
+.relatorio{
+	margin-left: 250px;
+	font-size: 15px;
+}
+
+.relatorio-desc{
+	font-size: 30px;
 }

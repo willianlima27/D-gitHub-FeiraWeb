@@ -28,7 +28,7 @@ public class PresencaDaoTest {
 		SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
 		Date dt = null;
 		try {
-			dt = f.parse("11/06/2016");
+			dt = f.parse("25/06/2016");
 		} catch (ParseException e) {
 		// TODO Auto-generated catch block
 			e.printStackTrace();

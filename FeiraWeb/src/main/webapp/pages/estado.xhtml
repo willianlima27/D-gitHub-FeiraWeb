@@ -46,18 +46,19 @@
 						oncomplete="PF('dialogo').show();" update=":formCadastro:painel">
 						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 					</p:commandButton>
+					<p:commandButton icon="ui-icon-print" value="Imprimir" actionListener="#{estadoBean.imprimir}"/>
 				</f:facet>
 			
 				<p:column headerText="Nome" sortBy="#{estado.nomeEstado}">
 					<h:outputText value="#{estado.nomeEstado}" />				
 				</p:column>
 			
-				<p:column width="100" headerText="Sigla" sortBy="#{estado.sigla}">
+				<p:column style="text-align:center" width="100" headerText="Sigla" sortBy="#{estado.sigla}">
 					<h:outputText value="#{estado.sigla}" />			
 				</p:column>
 				
 				<!-- # - criando el para chamar os metodos de exclusão -->
-				<p:column width="100" headerText="Opções">
+				<p:column style="text-align:center" width="100" headerText="Opções">
 					<p:commandButton icon="ui-icon-trash" actionListener="#{estadoBean.excluir}"
 					update=":mensagem :formListagem:tabela">
 					<p:confirm header="Confirmação"	message = "Deseja Excluir o estado?" icon="ui-icon-alert" />
@@ -90,13 +91,13 @@
 		draggable="false" resizable="false" modal="true" closable="false">
 		<h:form id="formCadastro">
 			<h:panelGrid id="painel" columns="2">
-				<p:outputLabel for="nomeEstado" value="Nome:" />
-				<p:inputText id="nomeEstado" maxlength="50" size="30"
+				<p:outputLabel for="nomeEstado" style = "margin-bottom: 5px" value="Nome:" />
+				<p:inputText id="nomeEstado" style = "margin-bottom: 5px" maxlength="50" size="30"
 					required="true" requiredMessage="Campo Obrigatório não preenchido"
 					value="#{estadoBean.estado.nomeEstado}" />
 
-				<p:outputLabel for="sigla" value="Sigla:" />
-				<p:inputText id="sigla" maxlength="2" size="10"
+				<p:outputLabel for="sigla" style = "margin-bottom: 5px" value="Sigla:" />
+				<p:inputText id="sigla" style = "margin-bottom: 5px" maxlength="2" size="10"
 					required="true" requiredMessage="Campo Obrigatório não preenchido"
 					value="#{estadoBean.estado.sigla}" />
 			</h:panelGrid>
